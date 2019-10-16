@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,8 +33,9 @@ public class Cow {
 	@Column(name = "peso", nullable = false)
 	private float peso;
 	
-	@Column(name = "herd_Id", nullable = false)
-	private long herdId;	
+	@ManyToOne
+	@JoinColumn(name = "herd_Id", referencedColumnName = "id" )
+	private Herd herd;	
 
  public long getId() {
      return id;
@@ -51,7 +54,6 @@ public class Cow {
  }
 
  public void setFechaNacimiento(Date value) {
-     this.fechaNacimiento = new Date();
      fechaNacimiento = value;
  }
 
@@ -80,10 +82,10 @@ public class Cow {
  }
 
  public long getHerdId() {
-     return herdId;
+     return herd.getId();
  }
 
- public void setHerdId(long value) {
-     this.herdId = value;
- }
+	public void setHerd(Herd herd) {
+		this.herd = herd;
+	}
 }

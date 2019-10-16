@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +18,9 @@ public class CowBcs {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "cow_id", nullable = false)
-	private long cowId;
+	@ManyToOne
+	@JoinColumn(name = "cow_id", referencedColumnName = "id" )
+	private Cow cowId;
 	
 	@Column(name = "fecha", nullable = false)
 	private Date fecha;
@@ -30,11 +33,11 @@ public class CowBcs {
  	}
 	
 	public long getCowId() {
-		return cowId;
+		return cowId.getId();
 	}
 	
-	public void setCowId(long value) {
-		this.cowId = value;
+	public void setCowId(Cow c) {
+		this.cowId = c;
 	}
 	
 	public Date getFecha() {

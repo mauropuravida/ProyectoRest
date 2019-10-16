@@ -39,7 +39,7 @@ public class RestServiceImp implements RestService{
 		he.setLocation(repo.findById(id).getLocation());
 		
 		List<AnimalInfo> ai = new ArrayList<AnimalInfo>();
-		List<Cow> cows = cr.findAllByherdId(id);
+		List<Cow> cows = cr.findAllByherd(repo.findById(id));
 		for (Cow cow : cows) {
 			AnimalInfo aiAux = findCowById(cow.getId());
 
@@ -69,13 +69,13 @@ public class RestServiceImp implements RestService{
 		AnimalInfo aiAux = new AnimalInfo();
 		aiAux.setId(cow.getId());
 		aiAux.setElectronicId(cow.getElectronicId());
-		//aiAux.setFechaNacimiento(cow.getFechaNacimiento());
+		aiAux.setFechaNacimiento(cow.getFechaNacimiento());
 		aiAux.setUltimaFechaParto(cow.getUltimaFechaParto());
 		aiAux.setCantidadPartos(cow.getCantidadPartos());
 		aiAux.setPeso(cow.getPeso());
 		aiAux.setHerdId(cow.getHerdId());
 		
-		CowBcs cbrr = cbr.findFirstBycowIdOrderByFechaDesc(cow.getId());
+		CowBcs cbrr = cbr.findFirstBycowIdOrderByFechaDesc(cow);
 		if (cbrr != null) {
 			aiAux.setCc(cbrr.getCc());
 			aiAux.setCowBcsId(cbrr.getId());
@@ -92,15 +92,13 @@ public class RestServiceImp implements RestService{
 
 	@Override
 	public Cow cowSave(Cow c) {
-		//System.out.print(c.getFechaNacimiento());
-		return new Cow();
-		//return cr.save(c);
+		return cr.save(c);
 	}
 
 	@Override
 	public CowBcs cowBcsSave(CowBcs c) {
-		// TODO Auto-generated method stub
-		return null;
+		//aca se deben controlar alertas
+		return cbr.save(c);
 	}
 
 }

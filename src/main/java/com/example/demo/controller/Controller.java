@@ -44,7 +44,6 @@ public class Controller {
 	//Cargar una vaca
 	@PostMapping(path = "/api/cow/")
 	public ResponseEntity<Cow> registerCow(@RequestBody Cow c){
-		System.out.print(c.getFechaNacimiento());
 		return ResponseEntity.ok(rs.cowSave(c));
 	}
 	
