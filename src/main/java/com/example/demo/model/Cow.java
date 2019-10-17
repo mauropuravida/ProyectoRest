@@ -9,15 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+
+import org.hibernate.annotations.Check;
 
 @Entity
 @Table
+@Check(constraints = " ultima_fecha_parto > fecha_nacimiento ")
 public class Cow {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Min(value=1)
 	@Column(name = "electronic_id", nullable = false)
 	private long electronicId;
 
@@ -27,9 +33,12 @@ public class Cow {
 	@Column(name = "ultima_fecha_parto", nullable = true)
 	private Date ultimaFechaParto;
 	
+	@Min(value=0)
 	@Column(name = "cantidad_partos", nullable = false)
 	private long cantidadPartos;
 	
+	@Digits(integer=4,fraction=2)
+	@Min(value=1)
 	@Column(name = "peso", nullable = false)
 	private float peso;
 	

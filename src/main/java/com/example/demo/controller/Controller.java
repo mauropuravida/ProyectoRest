@@ -17,6 +17,7 @@ import com.example.demo.model.HerdAlert;
 import com.example.demo.model.HerdInfo;
 import com.example.demo.service.RestService;
 
+import com.example.demo.exceptions.NotFoundException;
 import load.AnimalAlertLoad;
 import load.CowBcsLoad;
 import load.CowLoad;
@@ -56,6 +57,11 @@ public class Controller {
 	@PostMapping(path = "/api/cow/")
 	public ResponseEntity<Cow> registerCow(@RequestBody CowLoad c){
 		Herd herd = rs.findHerdById(c.getHerdId());
+		
+		if(herd == null) {
+			throw new NotFoundException("El id de herd no existe en la base de datos");
+		}
+		
 		Cow cow = new Cow();
 		
 		cow.setCantidadPartos(c.getCantidadPartos());
@@ -71,6 +77,11 @@ public class Controller {
 	@PostMapping(path = "/api/bcs/")
 	public ResponseEntity<CowBcs> registerCowBcs(@RequestBody CowBcsLoad c){
 		Cow cow = rs.findCowById(c.getCowId());
+		
+		if(cow == null) {
+			throw new NotFoundException("El id de cow no existe en la base de datos");
+		}
+		
 		CowBcs bcs = new CowBcs();
 		
 		bcs.setCc(c.getCc());
@@ -85,6 +96,10 @@ public class Controller {
 	public ResponseEntity<HerdAlert> registerHerdAlert(@RequestBody HerdAlertLoad h){
 		Herd herd = rs.findHerdById(h.getHerdId());
 		
+		if(herd == null) {
+			throw new NotFoundException("El id de herd no existe en la base de datos");
+		}
+		
 		HerdAlert alert = new HerdAlert();
 		alert.setBcsThresholdMax(h.getBcsThresholdMax());
 		alert.setBcsThresholdMin(h.getBcsThresholdMin());
@@ -97,6 +112,10 @@ public class Controller {
 	@PostMapping(path = "/api/cowAlert/")
 	public ResponseEntity<AnimalAlert> registerCowAlert(@RequestBody AnimalAlertLoad c){
 		Cow cow = rs.findCowById(c.getCowId());
+		
+		if(cow == null) {
+			throw new NotFoundException("El id de cow no existe en la base de datos");
+		}
 		
 		AnimalAlert animalA = new AnimalAlert();
 		animalA.setBcsThresholdMax(c.getBcsThresholdMax());

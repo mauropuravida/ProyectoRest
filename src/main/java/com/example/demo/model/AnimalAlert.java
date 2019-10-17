@@ -8,12 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.annotations.Check;
 
 @Entity
 @Table
+@Check(constraints = "bcs_threshold_min < bcs_threshold_max")
 public class AnimalAlert {
 
 	@Id
+	@Min(value=1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
@@ -21,9 +28,15 @@ public class AnimalAlert {
 	@JoinColumn(name = "cow_Id", referencedColumnName = "id" )
 	private Cow cow;	
 	
+	@Min(value=1)
+	@Max(value=9)
+	@Digits(integer=1,fraction=2)
 	@Column(name = "bcs_threshold_max", nullable = false)
 	private float bcsThresholdMax;
 	
+	@Min(value=1)
+	@Max(value=9)
+	@Digits(integer=1,fraction=2)
 	@Column(name = "bcs_threshold_min", nullable = false)
 	private float bcsThresholdMin;
 	
