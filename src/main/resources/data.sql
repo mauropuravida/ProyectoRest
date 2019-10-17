@@ -13,3 +13,5 @@ insert into cow_bcs values(2, 7.7, '2018-10-19', 2);
 insert into cow_bcs values(3, 8.1, '2017-07-19', 3);
 insert into cow_bcs values(4, 8.1, '2017-10-12', 1);
 
+insert into animal_alert values(1, 8.8, 5.1, 1);
+
