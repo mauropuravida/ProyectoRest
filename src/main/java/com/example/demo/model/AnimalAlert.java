@@ -20,7 +20,6 @@ import org.hibernate.annotations.Check;
 public class AnimalAlert {
 
 	@Id
-	@Min(value=1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	

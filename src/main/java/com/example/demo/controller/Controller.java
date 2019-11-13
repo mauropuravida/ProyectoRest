@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.AnimalAlert;
+import com.example.demo.model.AnimalAlertFired;
 import com.example.demo.model.AnimalInfo;
 import com.example.demo.model.Cow;
 import com.example.demo.model.CowBcs;
 import com.example.demo.model.Herd;
 import com.example.demo.model.HerdAlert;
+import com.example.demo.model.HerdAlertFired;
 import com.example.demo.model.HerdInfo;
 import com.example.demo.service.RestService;
 
@@ -23,6 +27,7 @@ import load.CowBcsLoad;
 import load.CowLoad;
 import load.HerdAlertLoad;
 import load.HerdLoad;
+import load.Session;
 
 //Definicion de get, post, delete, put
 
@@ -124,5 +129,21 @@ public class Controller {
 		
 		return ResponseEntity.ok(rs.animalAlertSave(animalA));
 	}
+	
+	@GetMapping(path="/api/cowFiredAlert")
+	public ResponseEntity<List<AnimalAlertFired>> getCowsFiredAlert(){
+		return ResponseEntity.ok(rs.getCowsFiredAlert());
+	}
+	
+	@GetMapping(path="/api/herdFiredAlert")
+	public ResponseEntity<List<HerdAlertFired>> getHerdsFiredAlert(){
+		return ResponseEntity.ok(rs.getHerdsFiredAlert());
+	}
+	
+	@PostMapping (path = "/api/session")
+	public ResponseEntity<Boolean> setEnableSession(@RequestBody Session session){
+		return ResponseEntity.ok(rs.setSession(session.isEnable()));
+	}
+	
 	
 }
