@@ -15,7 +15,6 @@ import javax.validation.constraints.Min;
 public class Herd {
 	
 	@Id
-	@Min(value=1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	

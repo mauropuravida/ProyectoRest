@@ -10,6 +10,7 @@ import com.example.demo.model.Cow;
 public interface AnimalAlertRepository  extends PagingAndSortingRepository<AnimalAlert, Long>{
 	
 	AnimalAlert findBycow(Cow c);
+	AnimalAlert findByCowId(long id);
 	AnimalAlert save(AnimalAlert aa);
 
 }

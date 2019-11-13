@@ -39,19 +39,19 @@ public class Controller {
 	RestService rs;
 	
 	//Obtener informacion de un determinado herd
-	@GetMapping(path = "/api/herd/{id}/")
+	@GetMapping(path = "/api/herd/{id}")
 	public ResponseEntity<HerdInfo> getHerd(@PathVariable(value = "id") long id ){
 		return ResponseEntity.ok(rs.findInfoHerdById(id));
 	}
 	
 	//Obtener informacion de una determinada vaca
-	@GetMapping(path = "/api/cow/{id}/")
+	@GetMapping(path = "/api/cow/{id}")
 	public ResponseEntity<AnimalInfo> getCow(@PathVariable(value = "id") long id ){
 		return ResponseEntity.ok(rs.findInfoCowById(id));
 	}
 	
 	//Cargar un herd
-	@PostMapping(path = "/api/herd/")
+	@PostMapping(path = "/api/herd")
 	public ResponseEntity<Herd> registerHerd(@RequestBody HerdLoad h){
 		Herd herd = new Herd();
 		herd.setLocation(h.getLocation());
@@ -59,7 +59,7 @@ public class Controller {
 	}
 	
 	//Cargar una vaca
-	@PostMapping(path = "/api/cow/")
+	@PostMapping(path = "/api/cow")
 	public ResponseEntity<Cow> registerCow(@RequestBody CowLoad c){
 		Herd herd = rs.findHerdById(c.getHerdId());
 		
@@ -79,7 +79,7 @@ public class Controller {
 	}
 	
 	//Cargar una Bcs
-	@PostMapping(path = "/api/bcs/")
+	@PostMapping(path = "/api/bcs")
 	public ResponseEntity<CowBcs> registerCowBcs(@RequestBody CowBcsLoad c){
 		Cow cow = rs.findCowById(c.getCowId());
 		
@@ -97,7 +97,7 @@ public class Controller {
 	}
 	
 	//Cargar alerta para herd alert
-	@PostMapping(path = "/api/herdAlert/")
+	@PostMapping(path = "/api/herdAlert")
 	public ResponseEntity<HerdAlert> registerHerdAlert(@RequestBody HerdAlertLoad h){
 		Herd herd = rs.findHerdById(h.getHerdId());
 		
@@ -114,7 +114,7 @@ public class Controller {
 	}
 	
 	//Cargar alerta para cow alert
-	@PostMapping(path = "/api/cowAlert/")
+	@PostMapping(path = "/api/cowAlert")
 	public ResponseEntity<AnimalAlert> registerCowAlert(@RequestBody AnimalAlertLoad c){
 		Cow cow = rs.findCowById(c.getCowId());
 		

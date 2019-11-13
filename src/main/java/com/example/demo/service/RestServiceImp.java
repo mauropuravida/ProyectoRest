@@ -166,11 +166,18 @@ public class RestServiceImp implements RestService {
 
 	@Override
 	public AnimalAlert animalAlertSave(AnimalAlert c) {
+		AnimalAlert existente = animalAlertRepository.findByCowId(c.getAnimalId());
+		if (existente != null)
+			animalAlertRepository.delete(existente);
 		return animalAlertRepository.save(c);
 	}
 
 	@Override
 	public HerdAlert herdAlertSave(HerdAlert h) {
+		HerdAlert existente = herdAlertRepository.findByherd(
+				herdRepository.findById(h.getHerdId()));
+		if (existente != null)
+			herdAlertRepository.delete(existente);
 		return herdAlertRepository.save(h);
 	}
 
