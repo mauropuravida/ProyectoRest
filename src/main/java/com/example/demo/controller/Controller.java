@@ -145,5 +145,10 @@ public class Controller {
 		return ResponseEntity.ok(rs.setSession(session.isEnable()));
 	}
 	
+	@GetMapping(path = "/api/session")
+	public ResponseEntity<Boolean> getEnableSession(){
+		return ResponseEntity.ok(rs.getSession());
+	}
+	
 	
 }

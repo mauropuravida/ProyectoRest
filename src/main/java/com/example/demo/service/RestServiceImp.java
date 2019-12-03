@@ -265,5 +265,10 @@ public class RestServiceImp implements RestService {
 		sessionEnabled = enable;
 		return sessionEnabled;
 	}
+	
+	@Override
+	public Boolean getSession() {
+		return sessionEnabled;
+	}
 
 }

@@ -39,4 +39,5 @@ public interface RestService {
 
 	Boolean setSession(boolean enable);
 	
+	Boolean getSession();
 }
