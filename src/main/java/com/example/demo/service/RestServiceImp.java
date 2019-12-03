@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.example.demo.repository.CowRepository;
 import com.example.demo.repository.HerdAlertFiredRepository;
 import com.example.demo.repository.HerdAlertRepository;
 import com.example.demo.repository.HerdRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @EnableScheduling
 @Service
@@ -53,6 +55,9 @@ public class RestServiceImp implements RestService {
 
 	@Autowired
 	AnimalAlertFiredRepository animalAlertFiredRepository;
+	
+	@Autowired
+    private ObjectMapper objectMapper;
 	
 	private static boolean sessionEnabled = false;
 
@@ -219,6 +224,24 @@ public class RestServiceImp implements RestService {
 				aaf.setBcs_fired(cc);
 				aaf.setFecha(today);
 				animalAlertFiredRepository.save(aaf);
+				
+				OkHttpPost post = new OkHttpPost();
+				try {
+					String mensaje = "{" + 
+							"  \"to\": \"/topics/notificaciones\"," + 
+							"  \"notification\": {" + 
+							"     \"title\": \"Alerta de vaca\"," + 
+							"     \"body\": \"Vaca " + cow.getId() +" - Bcs: "+ cc +"\"" + 
+							"  }," + 
+							"  \"data\": " +
+							objectMapper.writeValueAsString(aaf) +
+							"}";
+
+					post.post(mensaje);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -239,6 +262,23 @@ public class RestServiceImp implements RestService {
 				haf.setFecha(today);
 				herdAlertFiredRepository.save(haf);
 				
+				OkHttpPost post = new OkHttpPost();
+				try {
+					String mensaje = "{" + 
+							"  \"to\": \"/topics/notificaciones\"," + 
+							"  \"notification\": {" + 
+							"     \"title\": \"Alerta de rodeo\"," + 
+							"     \"body\": \"Rodeo " + h.getId() +" - Bcs: "+ hi.getBcsPromedio() +"\"" + 
+							"  }," + 
+							"  \"data\": " +
+							objectMapper.writeValueAsString(haf) +
+							"}";
+
+					post.post(mensaje);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 

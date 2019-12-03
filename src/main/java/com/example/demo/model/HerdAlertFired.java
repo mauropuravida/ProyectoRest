@@ -55,7 +55,7 @@ public class HerdAlertFired {
 	}
 
 	public void setBcs_fired(float bcs_fired) {
-		this.bcs_fired = bcs_fired;
+		this.bcs_fired = ((int) (bcs_fired * 100)) / 100f;
 	}
 
 	public long getId() {
